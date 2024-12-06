@@ -76,7 +76,7 @@ public class TenantsResource extends AbstractAdminResource<TenantAdminAuth> {
         firstResult = firstResult != null ? firstResult : 0;
         maxResults = maxResults != null ? maxResults : Constants.DEFAULT_MAX_RESULTS;
         return tenantProvider.getTenantsStream(realm)
-                .filter(tenant -> auth.isTenantMember(tenant))
+                .filter(tenant -> auth.isTenantMember(tenant) || auth.isRealmTenantManager())
                 .filter(tenant -> search.isEmpty() || tenant.getName().contains(search.get()))
                 .skip(firstResult)
                 .limit(maxResults)
